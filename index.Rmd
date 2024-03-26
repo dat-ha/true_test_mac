@@ -1,0 +1,23 @@
+---
+title: "Cascade Summer 2024"
+output: html_document
+---
+
+
+This is to test displaying new incoming data for the upcoming field season. 
+We want to 
+1) print the time of the last update 
+2) check if there are any missing data or outliers 
+3) 
+
+Time of last update:
+```{r, echo=FALSE}
+print(Sys.time())
+```
+
+
+
+```{r, echo=FALSE}
+data(cars)
+plot(cars$speed, cars$dist)
+```
