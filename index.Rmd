@@ -3,6 +3,7 @@ title: "Cascade Summer 2024"
 output: html_document
 ---
 
+*idea - if any of the EWS alarms go off, have text at the top of the page that there is a blooom!
 
 This is to test displaying new incoming data for the upcoming field season. 
 We want to 
