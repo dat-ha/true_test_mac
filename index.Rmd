@@ -22,30 +22,85 @@ data(cars)
 plot(cars$speed, cars$dist, xlab= "Dat's age", ylab='Reasons to cry', main='Test Plot')
 ```
 
+
+```{r, echo=FALSE, message=FALSE}
+library(lubridate)
+library(dplyr) 
+```
+
+
 # *DID WE HAVE ANY MISSING DATA?*
 
 (check to see if there are 1440 observations 
-  - if yes, then print 'yes there were 1440 observations' in green
+  - if yes, then print 'Hooray, there were 1440 observations in X_lake' in green
   - if no, print which times are missing, and add to list of missing data from previous days)
   
 for loop through the 3 lakes/csvs?
+
+
 ```{r, echo=FALSE}
-# data <- read.csv("your_file.csv")
-# num_observations <- nrow(data)
-# 
-# if (num_observations == 1440) {
-#   print('<span style="color:green;">Hooray! There were no missing observations.</span>')
-# } else {
-#   # Print the message in red text
-#   print('<span style="color:red;">No, there were some missing observations.</span>')
-#   
-#   all_times <- seq(from = as.POSIXct("00:00:00", format = "%H:%M:%S"), 
-#                    to = as.POSIXct("23:59:59", format = "%H:%M:%S"), by = "min")
-#   data_times <- as.POSIXct(data$time_column, format = "%H:%M:%S")
-#   missing_times <- setdiff(all_times, data_times)
-#   print(paste("Missing times:", format(missing_times, "%H:%M:%S")))
-# }
+#HEADER NAMES BECAUSE the first 4 rows in 2019 are BAD
+header_names <- c('Date/Time',	'Temp_YSI',	'SpCond_YSI',	'pH_YSI',	'	DO_YSI',	'DOlocalSat_YSI',	'Chl_YSI	BGA_YSI',	'SDL_Battery_YSI	Time_YSI',	'Date_YSI',	'Cond_YSI',	'pH_mV_YSI',	'DOslSat_YSI',	'Chl_RFU_YSI',	'BGA_RFU_YSI',	'	Sonde_Battery_YSI',	'Temp_HYLB',	'SpCond_HYLB',	'pH_HYLB',	'DO_HYLB',	'DOlocalSat_HYLB',	'Chl_HYLB',	'BGA_HYLB',	'SDL_Battery_HYLB',	'Time_HYLB', 'placeholder1', 'placeholder2', 'lake')
 ```
+
+
+```{r, echo=FALSE}
+#READ IN THE DATA
+folder_path <- "~/desktop/test_website_data/"
+
+csv_files <- list.files(folder_path, pattern = "\\.csv$", full.names = TRUE)
+
+all_data <- lapply(csv_files, function(file) {
+  data <- read.csv(file, skip = 4, header = FALSE)
+  lake_name <- ifelse(grepl("Peter", file), "Peter", "Paul")
+  data$lake <- lake_name
+  return(data)
+})
+combined_data <- bind_rows(all_data)
+names(combined_data) <- header_names
+combined_data$`Date/Time` <- mdy_hm(combined_data$`Date/Time`)
+combined_data$Date <- date(combined_data$`Date/Time`)
+
+peter_data <- combined_data %>%
+  filter(lake == "Peter") %>%
+  select(-lake)
+
+paul_data <- combined_data %>%
+  filter(lake == "Paul") %>%
+  select(-lake)
+```
+
+```{r, echo=FALSE}
+lake_data <- list(Peter = peter_data, Paul = paul_data)
+
+# Loop through each lake's data
+for (lake_name in names(lake_data)) {
+  # Get the data for the current lake
+  current_data <- lake_data[[lake_name]]
+  
+  most_recent_date <- max(current_data$Date)
+
+  current_data_recent <- current_data[current_data$Date == most_recent_date, ]
+  
+  num_observations <- nrow(current_data_recent)
+
+  if (num_observations == 288) {
+    print(paste("Hooray! There were no missing observations on", most_recent_date, "in", lake_name, "Lake."))
+  } else {
+    print(paste("No, there were some missing observations on", most_recent_date, "in", lake_name, "Lake."))
+    
+    all_times <- seq(from = as.POSIXct("00:00:00", format = "%H:%M:%S"),
+                     to = as.POSIXct("23:59:59", format = "%H:%M:%S"), by = "min")
+    data_times <- as.POSIXct(current_data_recent$`Date/Time`, format = "%H:%M:%S")
+    missing_times <- setdiff(all_times, data_times)
+    print(paste("Missing times in", lake_name, "lake:", format(missing_times, "%H:%M:%S")))
+  }
+}
+```
+
+
+
+
 
 # WERE THERE ANY OUTLIERS IN THE DATA?
 (check to see if there are outliers, either quartile method or X standard deviations from the mean)
