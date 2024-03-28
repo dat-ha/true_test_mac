@@ -5,8 +5,9 @@ output: html_document
 
 #remember to turn *KNIT ON SAVE* ON before exporting to website
 
-
 *This website to test displaying new incoming data for the upcoming field season* 
+Sonde and t-chain data will be updated everyday to show yesterday's data
+Manual chlorophyll will be updated every few days 
 
 incorporate - shiny app to easily display data from the 3 lakes? (instead of scrolling through a static page with all the variables) - data from another one folder
 
@@ -29,7 +30,7 @@ library(dplyr)
 ```
 
 
-# *DID WE HAVE ANY MISSING DATA?*
+# *DID WE HAVE ANY MISSING DATA YESTERDAY?*
 ```{r, echo=FALSE}
 #HEADER NAMES BECAUSE the first 4 rows in 2019 are BAD
 header_names <- c('Date/Time',	'Temp_YSI',	'SpCond_YSI',	'pH_YSI',	'	DO_YSI',	'DOlocalSat_YSI',	'Chl_YSI	BGA_YSI',	'SDL_Battery_YSI	Time_YSI',	'Date_YSI',	'Cond_YSI',	'pH_mV_YSI',	'DOslSat_YSI',	'Chl_RFU_YSI',	'BGA_RFU_YSI',	'	Sonde_Battery_YSI',	'Temp_HYLB',	'SpCond_HYLB',	'pH_HYLB',	'DO_HYLB',	'DOlocalSat_HYLB',	'Chl_HYLB',	'BGA_HYLB',	'SDL_Battery_HYLB',	'Time_HYLB', 'placeholder1', 'placeholder2', 'lake')
@@ -62,6 +63,7 @@ paul_data <- combined_data %>%
   select(-lake)
 ```
 
+
 ```{r, echo=FALSE}
 lake_data <- list(Peter = peter_data, Paul = paul_data)
 
@@ -74,13 +76,13 @@ for (lake_name in names(lake_data)) {
   if (num_observations == 288) {
     print(paste("HOORAY! There were no missing observations on", most_recent_date, "in", lake_name, "Lake."))
   } else {
-    print(paste("ALERT, there were some missing observations on", most_recent_date, "in", lake_name, "Lake."))
-    data_times <- as.POSIXct(current_data_recent$Time, format = "%H:%M")
-    # Generate all possible times in a day with 5-minute interval. for the 1 minute data this will be different 
+    data_times <- current_data_recent$Time
+    # Generate all possible times in a day with 5-minute interval. for the summer this will be 1 min
     all_times <- seq(from = as.POSIXct("00:00", format = "%H:%M"),
                      to = as.POSIXct("23:55", format = "%H:%M"), by = "5 min")
-
+    all_times <- format(all_times, "%H:%M")
     missing_times <- all_times[!all_times %in% data_times]
+    print(paste("You've been cursed by Father Hesburgh! There are", length(missing_times), "missing observations on", most_recent_date, 'in', lake_name, "Lake."))
     print(paste("Missing times in", lake_name, "Lake:", missing_times))
   }
 }
@@ -88,8 +90,11 @@ for (lake_name in names(lake_data)) {
 
 
 # WERE THERE ANY OUTLIERS IN THE DATA?
-(check to see if there are outliers, either quartile method or X standard deviations from the mean)
-  - if no outlier, print 'Hooray, there are no outliers detected!' in green
+```{r}
+outlier_vars <- c('Temp_YSI', 'pH_YSI', 'DOlocalSat_YSI', 'Chl_HYLB')
+```
+
+  - if no outlier, print 'Hooray, there are no outliers detected!'
   - if outlier, print 'There were outliers detected', and print the times/rows of outliers, change value to NAs)
 
 # MANUAL CHLOROPHYLL 
