@@ -264,27 +264,26 @@ $(document).ready(function () {
 
 <p>#remember to turn <em>KNIT ON SAVE</em> ON before exporting to
 website</p>
-<p><em>This website to test displaying new incoming data for the
-upcoming field season</em> Sonde and t-chain data will be updated
-everyday to show yesterday’s data Manual chlorophyll will be updated
-every few days</p>
+<p><em>This website is to test displaying new incoming data for the
+upcoming field season</em></p>
+<p>Sonde and t-chain data will be updated everyday to show yesterday’s
+data. Manual chlorophyll will be updated every few days</p>
 <p>incorporate - shiny app to easily display data from the 3 lakes?
 (instead of scrolling through a static page with all the variables) -
 data from another one folder</p>
 <div id="time-of-last-update" class="section level1">
 <h1><em>Time of last update:</em></h1>
-<pre><code>## [1] &quot;2024-03-28 15:49:37 EDT&quot;</code></pre>
+<pre><code>## [1] &quot;2024-03-28 16:05:50 EDT&quot;</code></pre>
 <p><img src="index_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 </div>
 <div id="did-we-have-any-missing-data-yesterday" class="section level1">
 <h1><em>DID WE HAVE ANY MISSING DATA YESTERDAY?</em></h1>
-<pre><code>## [1] &quot;HOORAY! There were no missing observations on 2019-07-12 in Peter Lake.&quot;
-## [1] &quot;You&#39;ve been cursed by Father Hesburgh! There are 2 missing observations on 2019-07-12 in Paul Lake.&quot;
-## [1] &quot;Missing times in Paul Lake: 00:45&quot; &quot;Missing times in Paul Lake: 18:15&quot;</code></pre>
+<pre><code>## [1] &quot;WAHOOWA! There were no missing observations on 2019-07-12 in Peter Lake.&quot;
+## [1] &quot;Father Hesburgh has cursed us! There are 2 missing observations on 2019-07-12 in Paul Lake.&quot;
+## [1] &quot;Missing times in Paul Lake: 00:45, 18:15&quot;</code></pre>
 </div>
 <div id="were-there-any-outliers-in-the-data" class="section level1">
 <h1>WERE THERE ANY OUTLIERS IN THE DATA?</h1>
-<pre class="r"><code>outlier_vars &lt;- c(&#39;Temp_YSI&#39;, &#39;pH_YSI&#39;, &#39;DOlocalSat_YSI&#39;, &#39;Chl_HYLB&#39;)</code></pre>
 <ul>
 <li>if no outlier, print ‘Hooray, there are no outliers detected!’</li>
 <li>if outlier, print ‘There were outliers detected’, and print the

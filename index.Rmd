@@ -5,8 +5,9 @@ output: html_document
 
 #remember to turn *KNIT ON SAVE* ON before exporting to website
 
-*This website to test displaying new incoming data for the upcoming field season* 
-Sonde and t-chain data will be updated everyday to show yesterday's data
+*This website is to test displaying new incoming data for the upcoming field season* 
+
+Sonde and t-chain data will be updated everyday to show yesterday's data.
 Manual chlorophyll will be updated every few days 
 
 incorporate - shiny app to easily display data from the 3 lakes? (instead of scrolling through a static page with all the variables) - data from another one folder
@@ -37,9 +38,7 @@ header_names <- c('Date/Time',	'Temp_YSI',	'SpCond_YSI',	'pH_YSI',	'	DO_YSI',	'D
 ```
 
 ```{r, echo=FALSE}
-#READ IN THE DATA
 folder_path <- "~/desktop/test_website_data/"
-
 csv_files <- list.files(folder_path, pattern = "\\.csv$", full.names = TRUE)
 
 all_data <- lapply(csv_files, function(file) {
@@ -74,7 +73,7 @@ for (lake_name in names(lake_data)) {
   num_observations <- nrow(current_data_recent)
 #for the 1 minute data it will be 1440
   if (num_observations == 288) {
-    print(paste("HOORAY! There were no missing observations on", most_recent_date, "in", lake_name, "Lake."))
+    print(paste("WAHOOWA! There were no missing observations on", most_recent_date, "in", lake_name, "Lake."))
   } else {
     data_times <- current_data_recent$Time
     # Generate all possible times in a day with 5-minute interval. for the summer this will be 1 min
@@ -82,15 +81,16 @@ for (lake_name in names(lake_data)) {
                      to = as.POSIXct("23:55", format = "%H:%M"), by = "5 min")
     all_times <- format(all_times, "%H:%M")
     missing_times <- all_times[!all_times %in% data_times]
-    print(paste("You've been cursed by Father Hesburgh! There are", length(missing_times), "missing observations on", most_recent_date, 'in', lake_name, "Lake."))
-    print(paste("Missing times in", lake_name, "Lake:", missing_times))
+    print(paste("Father Hesburgh has cursed us! There are", length(missing_times), "missing observations on", most_recent_date, 'in', lake_name, "Lake."))
+    missing_times_string <- paste(missing_times, collapse = ", ")
+    print(paste("Missing times in", lake_name, "Lake:", missing_times_string))
   }
 }
 ```
 
 
 # WERE THERE ANY OUTLIERS IN THE DATA?
-```{r}
+```{r, echo=FALSE}
 outlier_vars <- c('Temp_YSI', 'pH_YSI', 'DOlocalSat_YSI', 'Chl_HYLB')
 ```
 
