@@ -262,28 +262,43 @@ $(document).ready(function () {
 </div>
 
 
-<p>*idea - if any of the EWS alarms go off, have text at the top of the
-page that there is a bloom!</p>
-<p>This is to test displaying new incoming data for the upcoming field
-season.</p>
-<ol style="list-style-type: decimal">
-<li>print the time of the last update</li>
-<li>check if there are any missing data or outliers</li>
-</ol>
-<ul>
-<li>keep a running list</li>
-</ul>
-<ol start="3" style="list-style-type: decimal">
-<li><p>plot with manual chlorophyll - data from a folder</p></li>
-<li><p>EWS and early fancy stats/math that PIs want</p></li>
-<li><p>shiny app to easily display data from the 3 lakes? (instead of
-scrolling through a static page with all the variables) - data from
-another one folder</p></li>
-</ol>
-<p>Time of last update:</p>
-<pre><code>## [1] &quot;2024-03-27 22:26:31 EDT&quot;</code></pre>
-<p>testing</p>
+<p>#remember to turn <em>KNIT ON SAVE</em> ON before exporting to
+website</p>
+<p><em>This website to test displaying new incoming data for the
+upcoming field season</em></p>
+<p>incorporate - shiny app to easily display data from the 3 lakes?
+(instead of scrolling through a static page with all the variables) -
+data from another one folder</p>
+<div id="time-of-last-update" class="section level1">
+<h1><em>Time of last update:</em></h1>
+<pre><code>## [1] &quot;2024-03-28 10:20:06 EDT&quot;</code></pre>
 <p><img src="index_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+</div>
+<div id="did-we-have-any-missing-data" class="section level1">
+<h1><em>DID WE HAVE ANY MISSING DATA?</em></h1>
+<p>(check to see if there are 1440 observations - if yes, then print
+‘yes there were 1440 observations’ in green - if no, print which times
+are missing, and add to list of missing data from previous days)</p>
+<p>for loop through the 3 lakes/csvs?</p>
+</div>
+<div id="were-there-any-outliers-in-the-data" class="section level1">
+<h1>WERE THERE ANY OUTLIERS IN THE DATA?</h1>
+<p>(check to see if there are outliers, either quartile method or X
+standard deviations from the mean) - if no outlier, print ‘Hooray, there
+are no outliers detected!’ in green - if outlier, print ‘There were
+outliers detected’ in red, and print the times/rows of outliers, change
+value to NAs)</p>
+</div>
+<div id="manual-chlorophyll" class="section level1">
+<h1>MANUAL CHLOROPHYLL</h1>
+</div>
+<div
+id="ews-and-other-fancy-statsmath-that-pis-want-idea---if-any-of-the-ews-alarms-go-off-have-text-at-the-top-of-the-page-that-there-is-a-bloom"
+class="section level1">
+<h1>EWS and other fancy stats/math that PIs want (*idea - if any of the
+EWS alarms go off, have text at the top of the page that there is a
+bloom!)</h1>
+</div>
 
 
 

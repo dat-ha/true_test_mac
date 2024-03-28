@@ -3,33 +3,56 @@ title: "Cascade Summer 2024"
 output: html_document
 ---
 
-*idea - if any of the EWS alarms go off, have text at the top of the page that there is a bloom!
-
-This is to test displaying new incoming data for the upcoming field season. 
-
-1) print the time of the last update 
-2) check if there are any missing data or outliers 
-  - keep a running list 
-3) plot with manual chlorophyll - data from a folder 
-4) EWS and early fancy stats/math that PIs want
+#remember to turn *KNIT ON SAVE* ON before exporting to website
 
 
-3) shiny app to easily display data from the 3 lakes? (instead of scrolling through a static page with all the variables) - data from another one folder
+*This website to test displaying new incoming data for the upcoming field season* 
 
-  
+incorporate - shiny app to easily display data from the 3 lakes? (instead of scrolling through a static page with all the variables) - data from another one folder
 
-Time of last update:
+
+# *Time of last update:*
 ```{r, echo=FALSE}
 print(Sys.time())
 ```
-testing
+
 
 ```{r, echo=FALSE}
 data(cars)
-plot(cars$speed, cars$dist)
+plot(cars$speed, cars$dist, xlab= "Dat's age", ylab='Reasons to cry', main='Test Plot')
 ```
 
+# *DID WE HAVE ANY MISSING DATA?*
+
+(check to see if there are 1440 observations 
+  - if yes, then print 'yes there were 1440 observations' in green
+  - if no, print which times are missing, and add to list of missing data from previous days)
+  
+for loop through the 3 lakes/csvs?
 ```{r, echo=FALSE}
-
+# data <- read.csv("your_file.csv")
+# num_observations <- nrow(data)
+# 
+# if (num_observations == 1440) {
+#   print('<span style="color:green;">Hooray! There were no missing observations.</span>')
+# } else {
+#   # Print the message in red text
+#   print('<span style="color:red;">No, there were some missing observations.</span>')
+#   
+#   all_times <- seq(from = as.POSIXct("00:00:00", format = "%H:%M:%S"), 
+#                    to = as.POSIXct("23:59:59", format = "%H:%M:%S"), by = "min")
+#   data_times <- as.POSIXct(data$time_column, format = "%H:%M:%S")
+#   missing_times <- setdiff(all_times, data_times)
+#   print(paste("Missing times:", format(missing_times, "%H:%M:%S")))
+# }
 ```
+
+# WERE THERE ANY OUTLIERS IN THE DATA?
+(check to see if there are outliers, either quartile method or X standard deviations from the mean)
+  - if no outlier, print 'Hooray, there are no outliers detected!' in green
+  - if outlier, print 'There were outliers detected' in red, and print the times/rows of outliers, change value to NAs)
+
+# MANUAL CHLOROPHYLL 
+
+# EWS and other fancy stats/math that PIs want (*idea - if any of the EWS alarms go off, have text at the top of the page that there is a bloom!)
 
