@@ -6,12 +6,16 @@ output: html_document
 *idea - if any of the EWS alarms go off, have text at the top of the page that there is a bloom!
 
 This is to test displaying new incoming data for the upcoming field season. 
- 
+
 1) print the time of the last update 
 2) check if there are any missing data or outliers 
   - keep a running list 
-3) shiny app to easily display data from the 3 lakes? (instead of scrolling through a static page with all the variables)
+3) plot with manual chlorophyll - data from a folder 
 4) EWS and early fancy stats/math that PIs want
+
+
+3) shiny app to easily display data from the 3 lakes? (instead of scrolling through a static page with all the variables) - data from another one folder
+
   
 
 Time of last update:
