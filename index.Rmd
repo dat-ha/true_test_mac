@@ -3,7 +3,7 @@ title: "Cascade Summer 2024"
 output: html_document
 ---
 
-#remember to turn *KNIT ON SAVE* ON before exporting to website
+#remember to turn *KNIT ON SAVE* on before exporting to website
 
 **This website is to test displaying new incoming data for the upcoming field season**
 
@@ -16,7 +16,7 @@ incorporate - shiny app to easily display data from the 3 lakes? (instead of scr
 
 
 ## *Time of last update:*
-```{r, echo=FALSE}
+```{r, echo=FALSE, results='asis'}
 print(Sys.time())
 ```
 
@@ -62,8 +62,7 @@ paul_data <- combined_data %>%
   filter(lake == "Paul") 
 ```
 
-
-```{r, echo=FALSE}
+```{r, echo=FALSE, results='asis'}
 lake_data <- list(Peter = peter_data, Paul = paul_data)
 
 for (lake_name in names(lake_data)) {
@@ -71,25 +70,27 @@ for (lake_name in names(lake_data)) {
   most_recent_date <- max(current_data$Date)
   current_data_recent <- current_data[current_data$Date == most_recent_date, ]
   num_observations <- nrow(current_data_recent)
-#for the 1 minute data it will be 1440
+  
+  # For the 1-minute data it will be 1440
   if (num_observations == 288) {
-    print(paste("WAHOOWA! There were no missing observations on", most_recent_date, "in", lake_name, "Lake."))
+    cat('<font color="green">', paste("WAHOOWA! There were no missing observations on", most_recent_date, "in", lake_name, "Lake."),'</font>', "<br>")
   } else {
     data_times <- current_data_recent$Time
-    # Generate all possible times in a day with 5-minute interval. for the summer this will be 1 min
+    # Generate all possible times in a day with a 5-minute interval. For the summer, this will be 1 min
     all_times <- seq(from = as.POSIXct("00:00", format = "%H:%M"),
                      to = as.POSIXct("23:55", format = "%H:%M"), by = "5 min")
     all_times <- format(all_times, "%H:%M")
     missing_times <- all_times[!all_times %in% data_times]
-    print(paste("Father Hesburgh has cursed us! There are", length(missing_times), "missing observations on", most_recent_date, 'in', lake_name, "Lake."))
+    cat('<font color="red">Father Hesburgh has cursed us! There are ', length(missing_times), ' missing observations on ', format(most_recent_date, "%Y-%m-%d"), ' in ', lake_name,' Lake.</font>', "<br>")
     missing_times_string <- paste(missing_times, collapse = ", ")
-    print(paste("Missing times in", lake_name, "Lake:", missing_times_string))
+    cat(paste("Missing times in", lake_name, "Lake:", missing_times_string), "<br>")
   }
 }
 ```
 
+
 # WERE THERE ANY OUTLIERS YESTERDAY?
-```{r, echo=FALSE}
+```{r, echo=FALSE, results='asis'}
 lake_data <- list(Peter = peter_data, Paul = paul_data)
 outlier_vars <- c('Temp_YSI', 'pH_YSI', 'Chl_HYLB')
 
@@ -107,21 +108,21 @@ for (lake_name in names(lake_data)) {
     outlier_counts[i] <- sum(outliers)
     
     if (outlier_counts[i] > 0) {
-      print(paste('du Lac has been disobeyed! There were', outlier_counts[i], 'outliers in', lake_name, 'Lake for variable', var, 'on', most_recent_date))
+      cat('<font color="red">',paste('du Lac has been disobeyed! There were', outlier_counts[i], 'outliers in', lake_name, 'Lake for', var, 'on', most_recent_date),'</font>', "<br>")
       
       for (j in which(outliers)) {
-        print(paste('Time:', current_data_recent$Time[j], ', Value:', current_data_recent[[var]][j]))
+         cat(paste('Time:',current_data_recent$Time[j],'- Value:',current_data_recent[[var]][j]),"<br>")
       }
     }
   }
   if (sum(outlier_counts) == 0) {
-    print(paste('WAHOOWA! No outliers found in', lake_name, 'Lake on', most_recent_date))
+    cat('<font color="green">', paste('WAHOOWA! No outliers found in', lake_name, 'Lake on', most_recent_date),'</font>', "<br>")
   }
 }
 ```
 
 # BATTERY CHECK
-```{r, echo=FALSE}
+```{r, echo=FALSE, results='asis'}
 lake_data <- list(Peter = peter_data, Paul = paul_data)
 
 for (lake_name in names(lake_data)) {
@@ -132,14 +133,14 @@ for (lake_name in names(lake_data)) {
   below_10_indices <- which(current_data_recent$SDL_Battery_YSI < 10)
   
   if (length(below_10_indices) > 0) {
-    print(paste('CHANGE BATTERY SOON ON', lake_name, 'Lake'))
+    cat('<font color="red">', paste('CHANGE BATTERY SOON ON', lake_name, 'Lake'),'</font>', "<br>")
     
     first_below_10_index <- min(below_10_indices)
     
-    print(paste('Time when battery power first hits below 10V:',current_data_recent$Time[first_below_10_index], 'on', most_recent_date))
-    print(paste('Last battery reading on', lake_name, 'Lake:', tail(current_data_recent$SDL_Battery_YSI, 1),'V on', most_recent_date))
+    cat(paste('Time when battery power first falls below 10V:',current_data_recent$Time[first_below_10_index], 'on', most_recent_date), "<br>")
+    cat(paste('Last battery reading on', lake_name, 'Lake:', tail(current_data_recent$SDL_Battery_YSI, 1),'V on', most_recent_date), "<br>")
   } else {
-    print(paste('WAHOOWA! Last battery reading on', lake_name, 'Lake:', tail(current_data_recent$SDL_Battery_YSI, 1),'V on', most_recent_date))
+    cat('<font color="green">',paste('WAHOOWA! Last battery reading on', lake_name, 'Lake:', tail(current_data_recent$SDL_Battery_YSI, 1),'V on', most_recent_date),'</font>', "<br>")
   }
 }
 ```
