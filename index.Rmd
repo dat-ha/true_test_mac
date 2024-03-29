@@ -7,6 +7,10 @@ output: html_document
 
 **This website is to test displaying new incoming data for the upcoming field season**
 
+Peter will have double EXOs
+Paul and Tuesday will have 1 exo and 1 hydrolab, will have to adjust the code accordingly  
+
+
 shiny app outline <br>
   - shows each variable from the sensor from each lake <br>
     - 1 minute data, daily averages (be able to change how the data is averaged) <br>
