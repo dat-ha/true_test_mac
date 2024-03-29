@@ -10,12 +10,12 @@ output: html_document
 Sonde and t-chain data will be updated everyday to show yesterday's data.
 Manual chlorophyll will be updated every few days 
 
-incorporate - shiny app to easily display data from the 3 lakes? (instead of scrolling through a static page with all the variables) - data from another one folder
-  - 1 minute data, daily averages
+shiny app 
+  - 1 minute data, daily averages (be able to change how we view each variable)
   - t chain profiles
 
 
-## *Time of last update:*
+## *Website last updated:*
 ```{r, echo=FALSE, results='asis'}
 print(Sys.time())
 ```
@@ -26,20 +26,15 @@ data(cars)
 plot(cars$speed, cars$dist, xlab= "Dat's age", ylab='Reasons to cry', main='Test Plot')
 ```
 
-
 ```{r, echo=FALSE, message=FALSE}
 library(lubridate)
 library(dplyr) 
 ```
 
-
-# *DID WE HAVE ANY MISSING DATA YESTERDAY?*
 ```{r, echo=FALSE}
 #HEADER NAMES BECAUSE the first 4 rows in 2019 are BAD
 header_names <- c('Date/Time',	'Temp_YSI',	'SpCond_YSI',	'pH_YSI',	'DO_YSI',	'DOlocalSat_YSI',	'Chl_YSI',	'BGA_YSI',	'SDL_Battery_YSI',	'Time_YSI',	'Date_YSI',	'Cond_YSI',	'pH_mV_YSI',	'DOslSat_YSI',	'Chl_RFU_YSI',	'BGA_RFU_YSI',	'Sonde_Battery_YSI',	'Temp_HYLB',	'SpCond_HYLB',	'pH_HYLB',	'DO_HYLB',	'DOlocalSat_HYLB',	'Chl_HYLB',	'BGA_HYLB',	'SDL_Battery_HYLB',	'Time_HYLB', 'lake')
-```
 
-```{r, echo=FALSE}
 folder_path <- "~/desktop/test_website_data/"
 csv_files <- list.files(folder_path, pattern = "\\.csv$", full.names = TRUE)
 
@@ -62,6 +57,9 @@ paul_data <- combined_data %>%
   filter(lake == "Paul") 
 ```
 
+
+
+# MISSING DATA
 ```{r, echo=FALSE, results='asis'}
 lake_data <- list(Peter = peter_data, Paul = paul_data)
 
@@ -89,7 +87,7 @@ for (lake_name in names(lake_data)) {
 ```
 
 
-# WERE THERE ANY OUTLIERS YESTERDAY?
+# OUTLIERS
 ```{r, echo=FALSE, results='asis'}
 lake_data <- list(Peter = peter_data, Paul = paul_data)
 outlier_vars <- c('Temp_YSI', 'pH_YSI', 'Chl_HYLB')
@@ -145,7 +143,7 @@ for (lake_name in names(lake_data)) {
 }
 ```
 
-# MANUAL CHLOROPHYLL PLOT
+# MANUAL CHLOROPHYLL
 
 # EWS and other fancy stats/math that PIs want (*idea - if any of the EWS alarms go off, have text at the top of the page that there is a bloom!)
 
