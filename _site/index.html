@@ -238,12 +238,12 @@ $(document).ready(function () {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">Title</a>
+      <a class="navbar-brand" href="index.html">Cascade</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="content.html">Main page that links to files</a>
+  <a href="content.html">Shiny_app</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -264,16 +264,17 @@ $(document).ready(function () {
 
 <p>#remember to turn <em>KNIT ON SAVE</em> ON before exporting to
 website</p>
-<p><em>This website is to test displaying new incoming data for the
-upcoming field season</em></p>
+<p><strong>This website is to test displaying new incoming data for the
+upcoming field season</strong></p>
 <p>Sonde and t-chain data will be updated everyday to show yesterday’s
 data. Manual chlorophyll will be updated every few days</p>
 <p>incorporate - shiny app to easily display data from the 3 lakes?
 (instead of scrolling through a static page with all the variables) -
-data from another one folder</p>
-<div id="time-of-last-update" class="section level1">
-<h1><em>Time of last update:</em></h1>
-<pre><code>## [1] &quot;2024-03-28 16:05:50 EDT&quot;</code></pre>
+data from another one folder - 1 minute data, daily averages - t chain
+profiles</p>
+<div id="time-of-last-update" class="section level2">
+<h2><em>Time of last update:</em></h2>
+<pre><code>## [1] &quot;2024-03-29 01:16:56 EDT&quot;</code></pre>
 <p><img src="index_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 </div>
 <div id="did-we-have-any-missing-data-yesterday" class="section level1">
@@ -282,16 +283,27 @@ data from another one folder</p>
 ## [1] &quot;Father Hesburgh has cursed us! There are 2 missing observations on 2019-07-12 in Paul Lake.&quot;
 ## [1] &quot;Missing times in Paul Lake: 00:45, 18:15&quot;</code></pre>
 </div>
-<div id="were-there-any-outliers-in-the-data" class="section level1">
-<h1>WERE THERE ANY OUTLIERS IN THE DATA?</h1>
-<ul>
-<li>if no outlier, print ‘Hooray, there are no outliers detected!’</li>
-<li>if outlier, print ‘There were outliers detected’, and print the
-times/rows of outliers, change value to NAs)</li>
-</ul>
+<div id="were-there-any-outliers-yesterday" class="section level1">
+<h1>WERE THERE ANY OUTLIERS YESTERDAY?</h1>
+<pre><code>## [1] &quot;WAHOOWA! No outliers found in Peter Lake on 2019-07-12&quot;
+## [1] &quot;du Lac has been disobeyed! There were 2 outliers in Paul Lake for variable Temp_YSI on 2019-07-12&quot;
+## [1] &quot;Time: 01:20 , Value: 50&quot;
+## [1] &quot;Time: 02:05 , Value: 3&quot;
+## [1] &quot;du Lac has been disobeyed! There were 1 outliers in Paul Lake for variable pH_YSI on 2019-07-12&quot;
+## [1] &quot;Time: 01:20 , Value: 17&quot;
+## [1] &quot;du Lac has been disobeyed! There were 2 outliers in Paul Lake for variable Chl_HYLB on 2019-07-12&quot;
+## [1] &quot;Time: 07:00 , Value: 20000&quot;
+## [1] &quot;Time: 08:00 , Value: 20000&quot;</code></pre>
 </div>
-<div id="manual-chlorophyll" class="section level1">
-<h1>MANUAL CHLOROPHYLL</h1>
+<div id="battery-check" class="section level1">
+<h1>BATTERY CHECK</h1>
+<pre><code>## [1] &quot;WAHOOWA! Last battery reading on Peter Lake: 12.2 V on 2019-07-12&quot;
+## [1] &quot;CHANGE BATTERY SOON ON Paul Lake&quot;
+## [1] &quot;Time when battery power first hits below 10V: 23:05 on 2019-07-12&quot;
+## [1] &quot;Last battery reading on Paul Lake: 9 V on 2019-07-12&quot;</code></pre>
+</div>
+<div id="manual-chlorophyll-plot" class="section level1">
+<h1>MANUAL CHLOROPHYLL PLOT</h1>
 </div>
 <div
 id="ews-and-other-fancy-statsmath-that-pis-want-idea---if-any-of-the-ews-alarms-go-off-have-text-at-the-top-of-the-page-that-there-is-a-bloom"

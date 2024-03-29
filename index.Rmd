@@ -5,15 +5,17 @@ output: html_document
 
 #remember to turn *KNIT ON SAVE* ON before exporting to website
 
-*This website is to test displaying new incoming data for the upcoming field season* 
+**This website is to test displaying new incoming data for the upcoming field season**
 
 Sonde and t-chain data will be updated everyday to show yesterday's data.
 Manual chlorophyll will be updated every few days 
 
 incorporate - shiny app to easily display data from the 3 lakes? (instead of scrolling through a static page with all the variables) - data from another one folder
+  - 1 minute data, daily averages
+  - t chain profiles
 
 
-# *Time of last update:*
+## *Time of last update:*
 ```{r, echo=FALSE}
 print(Sys.time())
 ```
@@ -34,7 +36,7 @@ library(dplyr)
 # *DID WE HAVE ANY MISSING DATA YESTERDAY?*
 ```{r, echo=FALSE}
 #HEADER NAMES BECAUSE the first 4 rows in 2019 are BAD
-header_names <- c('Date/Time',	'Temp_YSI',	'SpCond_YSI',	'pH_YSI',	'	DO_YSI',	'DOlocalSat_YSI',	'Chl_YSI	BGA_YSI',	'SDL_Battery_YSI	Time_YSI',	'Date_YSI',	'Cond_YSI',	'pH_mV_YSI',	'DOslSat_YSI',	'Chl_RFU_YSI',	'BGA_RFU_YSI',	'	Sonde_Battery_YSI',	'Temp_HYLB',	'SpCond_HYLB',	'pH_HYLB',	'DO_HYLB',	'DOlocalSat_HYLB',	'Chl_HYLB',	'BGA_HYLB',	'SDL_Battery_HYLB',	'Time_HYLB', 'placeholder1', 'placeholder2', 'lake')
+header_names <- c('Date/Time',	'Temp_YSI',	'SpCond_YSI',	'pH_YSI',	'DO_YSI',	'DOlocalSat_YSI',	'Chl_YSI',	'BGA_YSI',	'SDL_Battery_YSI',	'Time_YSI',	'Date_YSI',	'Cond_YSI',	'pH_mV_YSI',	'DOslSat_YSI',	'Chl_RFU_YSI',	'BGA_RFU_YSI',	'Sonde_Battery_YSI',	'Temp_HYLB',	'SpCond_HYLB',	'pH_HYLB',	'DO_HYLB',	'DOlocalSat_HYLB',	'Chl_HYLB',	'BGA_HYLB',	'SDL_Battery_HYLB',	'Time_HYLB', 'lake')
 ```
 
 ```{r, echo=FALSE}
@@ -54,12 +56,10 @@ combined_data$Date <- date(combined_data$`Date/Time`)
 combined_data$Time <- format(combined_data$`Date/Time`, "%H:%M")
 
 peter_data <- combined_data %>%
-  filter(lake == "Peter") %>%
-  select(-lake)
+  filter(lake == "Peter")
 
 paul_data <- combined_data %>%
-  filter(lake == "Paul") %>%
-  select(-lake)
+  filter(lake == "Paul") 
 ```
 
 
@@ -88,16 +88,63 @@ for (lake_name in names(lake_data)) {
 }
 ```
 
-
-# WERE THERE ANY OUTLIERS IN THE DATA?
+# WERE THERE ANY OUTLIERS YESTERDAY?
 ```{r, echo=FALSE}
-outlier_vars <- c('Temp_YSI', 'pH_YSI', 'DOlocalSat_YSI', 'Chl_HYLB')
+lake_data <- list(Peter = peter_data, Paul = paul_data)
+outlier_vars <- c('Temp_YSI', 'pH_YSI', 'Chl_HYLB')
+
+for (lake_name in names(lake_data)) {
+  current_data <- lake_data[[lake_name]]
+  most_recent_date <- max(current_data$Date)
+  current_data_recent <- current_data[current_data$Date == most_recent_date, ]
+  outlier_counts <- numeric(length(outlier_vars))
+  
+  for (i in seq_along(outlier_vars)) {
+    var <- outlier_vars[i]
+    mean_var <- mean(current_data_recent[[var]], na.rm = TRUE)
+    sd_var <- sd(current_data_recent[[var]], na.rm = TRUE)
+    outliers <- abs((current_data_recent[[var]] - mean_var) / sd_var) > 5
+    outlier_counts[i] <- sum(outliers)
+    
+    if (outlier_counts[i] > 0) {
+      print(paste('du Lac has been disobeyed! There were', outlier_counts[i], 'outliers in', lake_name, 'Lake for variable', var, 'on', most_recent_date))
+      
+      for (j in which(outliers)) {
+        print(paste('Time:', current_data_recent$Time[j], ', Value:', current_data_recent[[var]][j]))
+      }
+    }
+  }
+  if (sum(outlier_counts) == 0) {
+    print(paste('WAHOOWA! No outliers found in', lake_name, 'Lake on', most_recent_date))
+  }
+}
 ```
 
-  - if no outlier, print 'Hooray, there are no outliers detected!'
-  - if outlier, print 'There were outliers detected', and print the times/rows of outliers, change value to NAs)
+# BATTERY CHECK
+```{r, echo=FALSE}
+lake_data <- list(Peter = peter_data, Paul = paul_data)
 
-# MANUAL CHLOROPHYLL 
+for (lake_name in names(lake_data)) {
+  current_data <- lake_data[[lake_name]]
+  most_recent_date <- max(current_data$Date)
+  current_data_recent <- current_data[current_data$Date == most_recent_date, ]
+  
+  below_10_indices <- which(current_data_recent$SDL_Battery_YSI < 10)
+  
+  if (length(below_10_indices) > 0) {
+    print(paste('CHANGE BATTERY SOON ON', lake_name, 'Lake'))
+    
+    first_below_10_index <- min(below_10_indices)
+    
+    print(paste('Time when battery power first hits below 10V:',current_data_recent$Time[first_below_10_index], 'on', most_recent_date))
+    print(paste('Last battery reading on', lake_name, 'Lake:', tail(current_data_recent$SDL_Battery_YSI, 1),'V on', most_recent_date))
+  } else {
+    print(paste('WAHOOWA! Last battery reading on', lake_name, 'Lake:', tail(current_data_recent$SDL_Battery_YSI, 1),'V on', most_recent_date))
+  }
+}
+```
+
+# MANUAL CHLOROPHYLL PLOT
 
 # EWS and other fancy stats/math that PIs want (*idea - if any of the EWS alarms go off, have text at the top of the page that there is a bloom!)
 

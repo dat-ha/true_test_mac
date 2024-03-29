@@ -1,7 +1,7 @@
 navbar:
-  title: Title
+  title: Cascade
   left:
-  - text: Main page that links to files
+  - text: Shiny_app
     href: content.html
 output:
   html_document:
