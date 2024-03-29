@@ -7,12 +7,11 @@ output: html_document
 
 **This website is to test displaying new incoming data for the upcoming field season**
 
-Sonde and t-chain data will be updated everyday to show yesterday's data.
-Manual chlorophyll will be updated every few days 
-
-shiny app 
-  - 1 minute data, daily averages (be able to change how we view each variable)
-  - t chain profiles
+shiny app outline <br>
+  - shows each variable from the sensor from each lake <br>
+    - 1 minute data, daily averages (be able to change how the data is averaged) <br>
+    - be able to show all 3 lakes at the same time<br>
+  - t chain profiles<br>
 
 
 ## *Website last updated:*
@@ -117,6 +116,8 @@ for (lake_name in names(lake_data)) {
     cat('<font color="green">', paste('WAHOOWA! No outliers found in', lake_name, 'Lake on', most_recent_date),'</font>', "<br>")
   }
 }
+
+# add code chunk to change outliers to NAs
 ```
 
 # BATTERY CHECK
@@ -143,7 +144,8 @@ for (lake_name in names(lake_data)) {
 }
 ```
 
-# MANUAL CHLOROPHYLL
+# MANUAL CHLOROPHYLL PLOT
 
-# EWS and other fancy stats/math that PIs want (*idea - if any of the EWS alarms go off, have text at the top of the page that there is a bloom!)
+# EWS and other fancy stats/math that PIs want 
+(idea - if any of the EWS alarms go off, have text at the top of the page saying that there is a bloom!)
 
