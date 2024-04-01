@@ -11,13 +11,6 @@ Peter will have double EXOs
 Paul and Tuesday will have 1 exo and 1 hydrolab, will have to adjust the code accordingly  
 
 
-shiny app outline <br>
-  - shows each variable from the sensor from each lake <br>
-    - 1 minute data, daily averages (be able to change how the data is averaged) <br>
-    - be able to show all 3 lakes at the same time<br>
-  - t chain profiles<br>
-
-
 ## *Website last updated:*
 ```{r, echo=FALSE, results='asis'}
 print(Sys.time())
