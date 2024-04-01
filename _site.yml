@@ -1,7 +1,7 @@
 navbar:
   title: Cascade
   left:
-  - text: Sensor Data
+  - text: Sensor_Data
     href: Shiny.html
   - text: Miscellaneous 
     href: content.html

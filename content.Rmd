@@ -1,5 +1,5 @@
 ---
-title: "Shiny app pls"
+title: "Miscellaneous"
 output: 
   html_document:
     df_print: paged
