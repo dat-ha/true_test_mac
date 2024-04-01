@@ -3,12 +3,12 @@ title: "Cascade Summer 2024"
 output: html_document
 ---
 
-#remember to turn *KNIT ON SAVE* on before exporting to website
+#remember to turn *KNIT ON SAVE* on before exporting to website.
 
 **This website is to test displaying new incoming data for the upcoming field season**
 
 Peter will have double EXOs
-Paul and Tuesday will have 1 exo and 1 hydrolab, will have to adjust the code accordingly  
+Paul and Tuesday will have 1 exo and 1 hydrolab, will have to adjust the code to fit the csvs
 
 
 ## *Website last updated:*
@@ -142,6 +142,8 @@ for (lake_name in names(lake_data)) {
 ```
 
 # MANUAL CHLOROPHYLL PLOT
+
+# MANUAL PHYCOCYANIN PLOT 
 
 # EWS and other fancy stats/math that PIs want 
 (idea - if any of the EWS alarms go off, have text at the top of the page saying that there is a bloom!)

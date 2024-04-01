@@ -1,7 +1,9 @@
 navbar:
   title: Cascade
   left:
-  - text: Shiny_app
+  - text: Sensor Data
+    href: Shiny.html
+  - text: Miscellaneous 
     href: content.html
 output:
   html_document:

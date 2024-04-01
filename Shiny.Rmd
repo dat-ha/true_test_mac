@@ -1,0 +1,12 @@
+---
+title: "Shiny App"
+output: 
+  html_document:
+    df_print: paged
+---
+
+shiny app outline <br>
+  - shows each variable from the sensor from each lake <br>
+    - 1 minute data, daily averages (be able to change how the data is averaged) <br>
+    - be able to show all 3 lakes at the same time<br>
+  - t chain profiles<br>
