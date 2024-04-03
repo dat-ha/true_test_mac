@@ -2,7 +2,7 @@ navbar:
   title: Cascade
   left:
   - text: Sensor_Data
-    href: Shiny.html
+    href: https://en.wikipedia.org/wiki/Dirty_Dancing
   - text: Miscellaneous 
     href: content.html
 output:
